@@ -26,7 +26,7 @@ const PageHome = () => {
 			<Button onClick={toggle} variant="contained" color="secondary">
 				Ajouter devoir
 			</Button>
-			<Collapse className="w-100 mt-3" isOpen={isOpen}>
+			<Collapse className="w-100 mt-3 mb-2" isOpen={isOpen}>
 				<AssignementAdd afterSubmit={refetch} />
 			</Collapse>
 			<div className="my-4 w-100">

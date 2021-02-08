@@ -85,7 +85,7 @@ const AssignementAdd = ({ afterSubmit }) => {
 					Merci de renseigner la date de rendu.
 				</FieldError>
 			</FormGroup>
-			<Button>
+			<Button color="dark">
 				Valider
 			</Button>
 		</Form>
