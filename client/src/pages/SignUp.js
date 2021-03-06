@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Form, Field, FieldError } from 'react-jsonschema-form-validation';
 import { useMutation } from 'react-query';
 import {
@@ -13,29 +13,47 @@ import {
 	InputGroupAddon,
 	InputGroupText,
 } from 'reactstrap';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
+import Select from 'react-select';
+import { USER_ROLE } from '../lib/api/enums';
 import errorMessages from '../lib/Form/errorMessages';
-import { updateAuth } from '../lib/authentication';
 
 import './Login.css';
-import { fetchAuth } from '../apiRequests/auth';
-import { UserContext } from '../context/UserContext';
+import { fetchSignUp } from '../apiRequests/auth';
 
 const schema = {
 	type: 'object',
 	properties: {
 		username: { type: 'string' },
 		password: { type: 'string' },
+		role: {
+			type: 'object',
+			properties: {
+				label: { type: 'string', enum: Object.values(USER_ROLE) },
+				value: { type: 'string', enum: Object.keys(USER_ROLE) },
+			},
+			required: ['label', 'value'],
+		},
 	},
-	required: ['username', 'password'],
+	required: ['username', 'password', 'role'],
 };
+
 const InputUsername = ({ ...props }) => (
 	<InputGroup className="">
 		<InputGroupAddon addonType="prepend">
 			<InputGroupText> <i className="fa fa-user" /> </InputGroupText>
 		</InputGroupAddon>
 		<Input {...props} className="form-control" placeholder="Identifiant" type="text" />
+	</InputGroup>
+);
+const options = Object.keys(USER_ROLE).map((key) => ({
+	label: USER_ROLE[key],
+	value: key,
+}));
+const SelectRole = ({ ...props }) => (
+	<InputGroup className="w-100">
+		<Select {...props} placeholder="Roles" options={options} />
 	</InputGroup>
 );
 
@@ -51,36 +69,45 @@ const InputPassword = ({ ...props }) => (
 	</InputGroup>
 );
 
-const PageLogin = () => {
-	const history = useHistory();
-	const [, setUser] = useContext(UserContext);
+const PageSignUp = () => {
 	const [formData, setFormData] = useState({
 		username: '',
 		password: '',
+		role: '',
 	});
 
-	const { mutate: mutateAuth, isError } = useMutation(fetchAuth, {
-		onSuccess: (user) => {
-			updateAuth({ ...user, password: formData.password });
-			setUser(user);
-			history.push('/home');
-		},
-	});
+	const {
+		mutate: mutateSignUp,
+		isError,
+		error,
+		isSuccess,
+	} = useMutation(fetchSignUp);
 
 	const handleChange = (newData) => {
 		setFormData(newData);
 	};
 
-	const handleSubmit = useCallback(async () => {
-		mutateAuth(formData);
-	}, [formData, mutateAuth]);
+	const handleChangeRole = (newData) => {
+		setFormData((prev) => ({ ...prev, role: newData }));
+	};
+
+	const handleSubmit = useCallback(() => {
+		const { value: role } = formData.role;
+		mutateSignUp({ ...formData, role });
+	}, [formData, mutateSignUp]);
 
 	return (
 		<div className="Login d-flex flex-column vh-100 align-items-center justify-content-center">
 			{isError && (
 				<UncontrolledAlert className="login-min-width" color="danger">
-					Identifiant ou mot de passe incorrect !<br />
+					{error.message}<br />
 					Merci de réessayer.
+				</UncontrolledAlert>
+			)}
+			{isSuccess && (
+				<UncontrolledAlert className="login-min-width" color="success">
+					L&apos;utilisateur à bien été créé.<br />
+					<Link to="/login"><b>Se connecter</b></Link>
 				</UncontrolledAlert>
 			)}
 			<Form
@@ -92,11 +119,15 @@ const PageLogin = () => {
 			>
 				<Card className="m-auto login-min-width">
 					<CardBody className="card-body">
-						<CardTitle className="h4 card-title text-center mb-4 mt-1">Connexion</CardTitle>
+						<CardTitle className="h4 card-title text-center mb-4 mt-1">Create an account</CardTitle>
 						<hr />
 						<FormGroup className="">
 							<Field
 								component={InputUsername}
+								autoComplete="off"
+								autoCorrect="off"
+								autoCapitalize="none"
+								spellCheck={false}
 								name="username"
 								id="username"
 								value={formData.username}
@@ -116,26 +147,39 @@ const PageLogin = () => {
 								Merci de renseigner votre mot de passe.
 							</FieldError>
 						</FormGroup>
+						<FormGroup className="w-100">
+							<Field
+								component={SelectRole}
+								className="w-100"
+								name="role"
+								id="role"
+								onChange={handleChangeRole}
+								value={formData.role}
+							/>
+							<FieldError name="role">
+								Merci de renseigner un rôle.
+							</FieldError>
+						</FormGroup>
 						<FormGroup className="">
 							<Button
-								block
 								type="submit"
+								block
 								color="primary"
 							>
-								Connexion
+								Sign up
 							</Button>
 						</FormGroup>
 					</CardBody>
 				</Card>
 			</Form>
 			<small className="my-2">
-				Don’t have an account yet? {' '}
-				<Link to="/sign-up">
-					Sign up
+				Already have an account? {' '}
+				<Link to="/login">
+					Log in
 				</Link>
 			</small>
 		</div>
 	);
 };
 
-export default PageLogin;
+export default PageSignUp;

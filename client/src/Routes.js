@@ -12,6 +12,7 @@ import PrivateRoute from './lib/PrivateRoute';
 
 import PageHome from './pages/Home';
 import PageLogin from './pages/Login';
+import PageSignUp from './pages/SignUp';
 
 /**
  * objet qui définit les caractéristiques des pages du menu de navigation
@@ -50,8 +51,9 @@ const Routes = () => {
 			)}
 		>
 			<Switch>
-				<Redirect exact from="/" to="/login" />
+				<Redirect exact from="/" to="/home" />
 				<Route path="/login" component={PageLogin} />
+				<Route path="/sign-up" component={PageSignUp} />
 				<Route path={paths}>
 					<LeftSidebar>
 						{menuPagesRole.map(({ Page, path }) => (

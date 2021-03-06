@@ -7,3 +7,16 @@ export const fetchAuth = ({ username, password }) => request(`${API_PATH_NAME}/l
 	auth: encodeAuthBase64({ username, password }),
 	method: 'POST',
 });
+
+export const fetchSignUp = ({
+	username,
+	password,
+	role,
+}) => request(`${API_PATH_NAME}/sign-up`, {
+	body: {
+		username: btoa(username),
+		password: btoa(password),
+		role,
+	},
+	method: 'POST',
+});
