@@ -63,7 +63,7 @@ const PageLogin = () => {
 		onSuccess: (user) => {
 			updateAuth({ ...user, password: formData.password });
 			setUser(user);
-			history.push('/search');
+			history.push('/home');
 		},
 	});
 

@@ -14,8 +14,8 @@ import PageLogin from './pages/Login';
  * objet qui définit les caractéristiques des pages du menu de navigation
  */
 const menuPages = {
-	search: {
-		home: ['ADMIN', 'USER'],
+	home: {
+		roles: ['ADMIN', 'USER'],
 		Page: PageHome,
 		path: '/home',
 	},
@@ -33,9 +33,9 @@ const generateRoutePage = (role) => (role ? Object.keys(menuPages)
 
 const Routes = () => {
 	const [user] = useContext(UserContext);
-
-	const paths = generateRoutePath(user.role);
-	const menuPagesRole = generateRoutePage(user.role);
+	const role = user?.role;
+	const paths = generateRoutePath(role);
+	const menuPagesRole = generateRoutePage(role);
 	return (
 		<Suspense
 			fallback={(
