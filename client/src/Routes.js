@@ -1,10 +1,13 @@
-import React, { Suspense, useContext } from 'react';
+import React, { Suspense } from 'react';
 import {
 	Switch,
 	Route,
 	Redirect,
 } from 'react-router-dom';
-import { UserContext } from './context/UserContext';
+
+import LeftSidebar from './components/menu/LeftSidebar';
+
+import { getUser } from './lib/localstorage/userStorage';
 import PrivateRoute from './lib/PrivateRoute';
 
 import PageHome from './pages/Home';
@@ -32,7 +35,7 @@ const generateRoutePage = (role) => (role ? Object.keys(menuPages)
 	.map((key) => menuPages[key]) : []);
 
 const Routes = () => {
-	const [user] = useContext(UserContext);
+	const user = getUser();
 	const role = user?.role;
 	const paths = generateRoutePath(role);
 	const menuPagesRole = generateRoutePage(role);
@@ -50,9 +53,11 @@ const Routes = () => {
 				<Redirect exact from="/" to="/login" />
 				<Route path="/login" component={PageLogin} />
 				<Route path={paths}>
-					{menuPagesRole.map(({ Page, path }) => (
-						<PrivateRoute key={path} path={path} component={Page} />
-					))}
+					<LeftSidebar>
+						{menuPagesRole.map(({ Page, path }) => (
+							<PrivateRoute key={path} path={path} component={Page} />
+						))}
+					</LeftSidebar>
 				</Route>
 				<Redirect exact from="*" to="/login" />
 			</Switch>
