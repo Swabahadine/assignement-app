@@ -1,4 +1,5 @@
 module.exports.USER_ROLE = {
-	ADMIN: 'admin',
-	USER: 'user',
+	ADMIN: 'ADMIN',
+	USER: 'USER',
+	TEACHER: 'TEACHER',
 };

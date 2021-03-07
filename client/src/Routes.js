@@ -14,12 +14,13 @@ import PageHome from './pages/Home';
 import PageLogin from './pages/Login';
 import PageSignUp from './pages/SignUp';
 
+const { ADMIN, USER, TEACHER } = USER_ROLE;
 /**
  * objet qui définit les caractéristiques des pages du menu de navigation
  */
 const menuPages = {
 	home: {
-		roles: ['ADMIN', 'USER'],
+		roles: [ADMIN, USER, TEACHER],
 		Page: PageHome,
 		path: '/home',
 	},
