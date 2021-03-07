@@ -1,4 +1,5 @@
 
+
 # assignement-app
 ## 1- Les roles
 3 roles sont définies:
@@ -22,10 +23,16 @@ Pour s'inscrire il faut : **username** , **password** et **role**
 - Il peut lire uniquement les Assignments affecté à sa matière, jamais ceux d'une autre matière. 
 - Il peut **noter** des Assignments de sa matières en donnant une note et un commentaire (facultatif).
 
-## 4 - Les fonctionnalités restantes
+### 4 - Points forts
+- API bien sécurisée: (erreur 500 très difficile à réaliser)
+- Application stable, gestion d'erreurs poussée
+- 3 rôles manipulés, l'interface s'adapte en fonction du rôle de l'utilisateur sans problème. 
+
+### 5 - Points faibles: les fonctionnalités restantes
 - image du professeur
 - image de la matière
 - suppression assignments (uniquement coté front, réalisé coté api)
 - suppresion matières (uniquement coté front, réalisé coté api)
 - modification assignment (uniquement coté front, réalisé coté api)
 - modification matières (uniquement coté front, réalisé coté api)
+
