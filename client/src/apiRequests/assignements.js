@@ -18,3 +18,9 @@ export const postAssignements = (data) => request(API_PATH_NAME, {
 	method: 'POST',
 	body: data,
 });
+
+export const putNotationOneAssignement = (data) => request(`${API_PATH_NAME}/notation/${data.id}`, {
+	auth: getAuth(),
+	method: 'PUT',
+	body: data,
+});
