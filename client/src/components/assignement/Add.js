@@ -38,7 +38,12 @@ const schema = {
 const AssignementAdd = ({ afterSubmit }) => {
 	const [formData, setFormData] = useState(initData);
 
-	const { mutate: mutateAdd, isSuccess } = useMutation(postAssignements, {
+	const {
+		mutate: mutateAdd,
+		isSuccess,
+		isError,
+		error,
+	} = useMutation(postAssignements, {
 		onSuccess: () => {
 			setFormData(initData);
 			afterSubmit();
@@ -71,6 +76,11 @@ const AssignementAdd = ({ afterSubmit }) => {
 			{isSuccess && (
 				<UncontrolledAlert color="success">
 					Le devoir a bien été ajouté !
+				</UncontrolledAlert>
+			)}
+			{isError && (
+				<UncontrolledAlert color="danger">
+					{error.message}
 				</UncontrolledAlert>
 			)}
 			<FormGroup>

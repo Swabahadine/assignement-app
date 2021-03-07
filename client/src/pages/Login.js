@@ -59,7 +59,7 @@ const PageLogin = () => {
 		password: '',
 	});
 
-	const { mutate: mutateAuth, isError } = useMutation(fetchAuth, {
+	const { mutate: mutateAuth, isError, error } = useMutation(fetchAuth, {
 		onSuccess: (user) => {
 			updateAuth({ ...user, password: formData.password });
 			setUser(user);
@@ -79,7 +79,7 @@ const PageLogin = () => {
 		<div className="Login d-flex flex-column vh-100 align-items-center justify-content-center">
 			{isError && (
 				<UncontrolledAlert className="login-min-width" color="danger">
-					Identifiant ou mot de passe incorrect !<br />
+					{error.message}<br />
 					Merci de réessayer.
 				</UncontrolledAlert>
 			)}
