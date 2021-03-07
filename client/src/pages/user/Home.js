@@ -12,7 +12,7 @@ import { AssignmentList } from '../../components/assignement/List';
 
 const PageHome = () => {
 	useQueryClient();
-	const { data: assignments, isSuccess, refetch } = useQuery('getAssignements', getAssignements);
+	const { data: assignments, isSuccess, refetch } = useQuery('userGetAssignements', getAssignements);
 	const [isOpen, setIsOpen] = useState(false);
 	const toggle = () => {
 		setIsOpen(((prev) => !prev));

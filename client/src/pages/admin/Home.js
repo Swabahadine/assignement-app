@@ -7,7 +7,7 @@ import { AssignmentList } from '../../components/assignement/List';
 
 const PageAdminHome = () => {
 	useQueryClient();
-	const { data: assignments, isSuccess } = useQuery('getAssignements', getAssignements);
+	const { data: assignments, isSuccess } = useQuery('adminGgetAssignements', getAssignements);
 	return (
 		<Container className="d-flex flex-column justify-content-start align-items-start">
 			<h3 className="py-4">Application de gestion des Assignments</h3>
