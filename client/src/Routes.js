@@ -14,6 +14,8 @@ import PrivateRoute from './lib/PrivateRoute';
 import PageAdminHome from './pages/admin/Home';
 import PageUserHome from './pages/user/Home';
 import PageTeacherHome from './pages/teacher/Home';
+import PageNoteAssignment from './pages/teacher/NoteAssignment';
+import PageAssignment from './pages/Assignment';
 import PageLogin from './pages/Login';
 import PageSignUp from './pages/SignUp';
 import PageSubject from './pages/Subject';
@@ -23,6 +25,11 @@ const { ADMIN, USER, TEACHER } = USER_ROLE;
  * objet qui définit les caractéristiques des pages du menu de navigation
  */
 const menuPages = {
+	assignment: {
+		roles: [TEACHER, USER, ADMIN],
+		Page: PageAssignment,
+		path: '/assignment/:id',
+	},
 	adminHome: {
 		roles: [ADMIN],
 		Page: PageAdminHome,
@@ -32,6 +39,11 @@ const menuPages = {
 		roles: [TEACHER],
 		Page: PageTeacherHome,
 		path: '/home',
+	},
+	noteAssignment: {
+		roles: [TEACHER],
+		Page: PageNoteAssignment,
+		path: '/teacher/note/assignment/:id',
 	},
 	userHome: {
 		roles: [USER],
