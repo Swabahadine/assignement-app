@@ -4,7 +4,7 @@ import {
 	Route,
 	Redirect,
 } from 'react-router-dom';
-import { USER_ROLE } from '../../api/src/lib/enums';
+import { USER_ROLE } from './lib/api/enums';
 
 import LeftSidebar from './components/menu/LeftSidebar';
 
