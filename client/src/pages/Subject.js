@@ -21,7 +21,7 @@ const PageSubject = () => {
 	};
 	return (
 		<Container className="d-flex flex-column justify-content-start align-items-start">
-			<h3 className="py-4">Application de gestion des Assignments</h3>
+			<h3 className="py-4">Les matières</h3>
 			<Button onClick={toggle} variant="contained" color="primary">
 				New subject
 			</Button>
