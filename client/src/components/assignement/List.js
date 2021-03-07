@@ -13,6 +13,7 @@ import {
 	TabContent,
 	TabPane,
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 export const AssignmentList = ({ assignments }) => {
 	const [activeTab, setActiveTab] = useState('1');
@@ -47,7 +48,7 @@ export const AssignmentList = ({ assignments }) => {
 								subject,
 								dateDeRendu,
 							}) => (
-								<ListGroupItem key={_id} tag="a" action>
+								<ListGroupItem key={_id} tag={Link} to={`/assignment/${_id}`} action>
 									<ListGroupItemHeading className="d-flex justify-content-between">
 										<span>{nom}</span>
 										{rendu && <Badge color="danger" pill>Rendu</Badge>}
