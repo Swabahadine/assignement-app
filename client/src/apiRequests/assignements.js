@@ -8,6 +8,11 @@ export const getAssignements = () => request(API_PATH_NAME, {
 	method: 'GET',
 });
 
+export const getOneAssignement = ({ queryKey: [, { id }] }) => request(`${API_PATH_NAME}/${id}`, {
+	auth: getAuth(),
+	method: 'GET',
+});
+
 export const postAssignements = (data) => request(API_PATH_NAME, {
 	auth: getAuth(),
 	method: 'POST',
