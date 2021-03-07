@@ -3,6 +3,7 @@ const { validator, wrapAsync: wa } = require('express-server-app');
 const { USER_ROLE } = require('../lib/enums');
 const assServices = require('../services/Assignement');
 const subjectServices = require('../services/Subject');
+const { notFound, unauthorized } = require('@hapi/boom');
 
 const { withUser, withAuth } = require('../session/withRoles');
 
@@ -23,6 +24,33 @@ router.get('/',
 		}
 		if (role === USER_ROLE.USER) {
 			const assignements = await assServices.findAll({ author: username });
+			res.json(assignements);
+		}
+	}));
+
+router.get('/:id',
+	withAuth,
+	wa(async (req, res) => {
+		const { id } = req.params;
+		const { role, username } = req.session.user;
+		const assignements = await assServices.findById(id);
+		if (!assignements) {
+			throw notFound('Not found.');
+		}
+		if (role === USER_ROLE.ADMIN) {
+			res.json(assignements);
+		}
+		if (role === USER_ROLE.TEACHER) {
+			const { teacher } = assignements.subject
+			if (teacher !== username) {
+				throw unauthorized('Ce devoir n\'est pas de votre matière');
+			}
+			res.json(assignements);
+		}
+		if (role === USER_ROLE.USER) {
+			if (assignements.author !== username) {
+				throw unauthorized('Ce devoir ne vous appartient pas') 
+			}
 			res.json(assignements);
 		}
 	}));

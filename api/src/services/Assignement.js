@@ -2,7 +2,7 @@ const Assignment = require('../models/Assignment');
 
 exports.create = (data) => Assignment.create(data);
 
-exports.findById = (id) => Assignment.findOne({ id });
+exports.findById = (_id) => Assignment.findOne({ _id }).populate('subject');
 
 exports.findAll = (arg) => Assignment.find(arg).populate('subject');
 

@@ -2,7 +2,7 @@ const Subject = require('../models/Subject');
 
 exports.create = (data) => Subject.create(data);
 
-exports.findById = (id) => Subject.findOne({ id });
+exports.findById = (_id) => Subject.findOne({ _id });
 
 exports.findByTeacher = (teacher) => Subject.find({ teacher });
 
