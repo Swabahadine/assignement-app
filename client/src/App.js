@@ -22,8 +22,8 @@ const App = () => {
 	const [user, setUser] = useState({});
 
 	const updateUserContext = useCallback((newUser) => {
-		setUser(newUser);
 		updateUser(newUser);
+		setUser(newUser);
 	}, []);
 
 	useEffect(() => {
