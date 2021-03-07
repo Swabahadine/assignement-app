@@ -75,7 +75,7 @@ export const AssignmentList = ({ assignments }) => {
 								subject,
 								dateDeRendu,
 							}) => (
-								<ListGroupItem key={_id} tag="a" action>
+								<ListGroupItem key={_id} tag={Link} to={`/assignment/${_id}`} action>
 									<ListGroupItemHeading className="d-flex justify-content-between">
 										<span>{nom}</span>
 										{rendu && <Badge color="danger" pill>Rendu</Badge>}
