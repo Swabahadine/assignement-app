@@ -4,7 +4,7 @@ exports.create = (data) => Assignment.create(data);
 
 exports.findById = (id) => Assignment.findOne({ id });
 
-exports.findAll = (arg) => Assignment.find(arg);
+exports.findAll = (arg) => Assignment.find(arg).populate('subject');
 
 exports.update = async (_id, props) => Assignment.updateOne({ _id }, { $set: props });
 
