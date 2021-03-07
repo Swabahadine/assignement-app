@@ -1,14 +1,30 @@
 const express = require('express');
 const { validator, wrapAsync: wa } = require('express-server-app');
+const { USER_ROLE } = require('../lib/enums');
 const assServices = require('../services/Assignement');
-const { withUser } = require('../session/withRoles');
+const subjectServices = require('../services/Subject');
+
+const { withUser, withAuth } = require('../session/withRoles');
 
 const router = express.Router();
 
 router.get('/',
+	withAuth,
 	wa(async (req, res) => {
-		const assignements = await assServices.findAll();
-		res.json(assignements);
+		const { role, username } = req.session.user;
+		if (role === USER_ROLE.ADMIN) {
+			const assignements = await assServices.findAll();
+			res.json(assignements);
+		}
+		if (role === USER_ROLE.TEACHER) {
+			const subjects = await subjectServices.findByTeacher(username)
+			const assignements = await assServices.findAll({ subject: {$in:subjects} });
+			res.json(assignements);
+		}
+		if (role === USER_ROLE.USER) {
+			const assignements = await assServices.findAll({ author: username });
+			res.json(assignements);
+		}
 	}));
 
 

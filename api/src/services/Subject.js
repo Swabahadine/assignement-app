@@ -4,7 +4,7 @@ exports.create = (data) => Subject.create(data);
 
 exports.findById = (id) => Subject.findOne({ id });
 
-exports.findByTeacherId = (teacherId) => Subject.findOne({ teacherId });
+exports.findByTeacher = (teacher) => Subject.find({ teacher });
 
 exports.findAll = (arg) => Subject.find(arg);
 

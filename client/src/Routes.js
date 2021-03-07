@@ -11,7 +11,9 @@ import LeftSidebar from './components/menu/LeftSidebar';
 import { getUser } from './lib/localstorage/userStorage';
 import PrivateRoute from './lib/PrivateRoute';
 
-import PageHome from './pages/Home';
+import PageAdminHome from './pages/admin/Home';
+import PageUserHome from './pages/user/Home';
+import PageTeacherHome from './pages/teacher/Home';
 import PageLogin from './pages/Login';
 import PageSignUp from './pages/SignUp';
 import PageSubject from './pages/Subject';
@@ -21,9 +23,19 @@ const { ADMIN, USER, TEACHER } = USER_ROLE;
  * objet qui définit les caractéristiques des pages du menu de navigation
  */
 const menuPages = {
-	home: {
-		roles: [ADMIN, USER, TEACHER],
-		Page: PageHome,
+	adminHome: {
+		roles: [ADMIN],
+		Page: PageAdminHome,
+		path: '/home',
+	},
+	teacherHome: {
+		roles: [TEACHER],
+		Page: PageTeacherHome,
+		path: '/home',
+	},
+	userHome: {
+		roles: [USER],
+		Page: PageUserHome,
 		path: '/home',
 	},
 	PageSubject: {
