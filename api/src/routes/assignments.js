@@ -1,6 +1,7 @@
 const express = require('express');
 const { validator, wrapAsync: wa } = require('express-server-app');
 const assServices = require('../services/Assignement');
+const { withUser } = require('../session/withRoles');
 
 const router = express.Router();
 
@@ -12,8 +13,26 @@ router.get('/',
 
 
 router.post('/',
+	withUser,
+	validator().validate({
+		body: {
+			type: 'object',
+			additionalProperties: false,
+			properties: {
+				dateDeRendu: { type: 'string' },
+				nom: { type: 'string'},
+				rendu: { type: 'boolean', default: false },
+				subject: { type: 'string' },
+				report: { type: 'string' },
+				note: { type: 'number', min:0, max:20 },
+			},
+			required: ['nom', 'subject', 'dateDeRendu'],
+		},
+	}),
 	wa(async (req, res) => {
-		const assignement = await assServices.create(req.body)
+		const { user } = req.session;
+		const author = user.username;
+		const assignement = await assServices.create({ ...req.body, author })
 		res.json(assignement);
 	}));
 
