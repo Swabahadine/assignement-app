@@ -17,10 +17,10 @@ import {
 import { Button } from '@material-ui/core';
 // import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
-import { getAssignements } from '../apiRequests/assignements';
-import AssignementAdd from '../components/assignement/Add';
+import { getAssignements } from '../../apiRequests/assignements';
+import AssignementAdd from '../../components/assignement/Add';
 
-const PageHome = () => {
+const PageUserHome = () => {
 	useQueryClient();
 	const { data: assignements, isSuccess, refetch } = useQuery('getAssignements', getAssignements);
 	const [isOpen, setIsOpen] = useState(false);
@@ -119,4 +119,4 @@ const PageHome = () => {
 	);
 };
 
-export default PageHome;
+export default PageUserHome;

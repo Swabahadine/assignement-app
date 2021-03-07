@@ -2,15 +2,18 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field, FieldError } from 'react-jsonschema-form-validation';
 import {
-	Button, FormGroup, Input, Label, UncontrolledAlert,
+	FormGroup, Input, Label, UncontrolledAlert,
 } from 'reactstrap';
+import { Button } from '@material-ui/core';
 import CarbonDatePicker from 'react-carbon-datepicker';
 import { useMutation } from 'react-query';
 import { postAssignements } from '../../apiRequests/assignements';
+import { SelectSubject } from '../select/Subject';
 
 const initData = {
 	nom: '',
 	dateDeRendu: Date.now(),
+	subject: '',
 };
 
 const schema = {
@@ -19,8 +22,17 @@ const schema = {
 	properties: {
 		nom: { type: 'string' },
 		dateDeRendu: { type: 'number' },
+		subject: {
+			type: 'object',
+			additionalProperties: false,
+			properties: {
+				label: { type: 'string' },
+				value: { type: 'string' },
+			},
+			required: ['label', 'value'],
+		},
 	},
-	required: ['nom', 'dateDeRendu'],
+	required: ['nom', 'dateDeRendu', 'subject'],
 };
 
 const AssignementAdd = ({ afterSubmit }) => {
@@ -32,15 +44,21 @@ const AssignementAdd = ({ afterSubmit }) => {
 			afterSubmit();
 		},
 	});
+
 	const handleChange = (newData) => {
 		setFormData(newData);
+	};
+	const handleChangeSubject = (newData) => {
+		setFormData((prev) => ({ ...prev, subject: newData }));
 	};
 	const handleDateChange = (newData) => {
 		setFormData((prev) => ({ ...prev, dateDeRendu: newData }));
 	};
+
 	const handleSubmit = async () => {
 		const dateDeRendu = new Date(formData.dateDeRendu);
-		await mutateAdd({ ...formData, dateDeRendu });
+		const subject = formData.subject.value;
+		await mutateAdd({ ...formData, dateDeRendu, subject });
 	};
 	return (
 		<Form
@@ -55,6 +73,19 @@ const AssignementAdd = ({ afterSubmit }) => {
 					Le devoir a bien été ajouté !
 				</UncontrolledAlert>
 			)}
+			<FormGroup>
+				<Field
+					component={SelectSubject}
+					id="subject"
+					name="subject"
+					placeholder="Choose a subject"
+					onChange={handleChangeSubject}
+					value={formData.subject}
+				/>
+				<FieldError name="subject">
+					Merci de selectionner le professeur.
+				</FieldError>
+			</FormGroup>
 			<FormGroup>
 				<Field
 					component={Input}
@@ -85,7 +116,7 @@ const AssignementAdd = ({ afterSubmit }) => {
 					Merci de renseigner la date de rendu.
 				</FieldError>
 			</FormGroup>
-			<Button color="dark">
+			<Button type="submit" variant="contained">
 				Valider
 			</Button>
 		</Form>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import {
 	Badge,
-	Collapse,
 	Container,
 	ListGroup,
 	ListGroupItem,
@@ -14,31 +13,17 @@ import {
 	TabContent,
 	TabPane,
 } from 'reactstrap';
-import { Button } from '@material-ui/core';
-// import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
-import { getAssignements } from '../apiRequests/assignements';
-import AssignementAdd from '../components/assignement/Add';
 
-const PageHome = () => {
+import { getAssignements } from '../../apiRequests/assignements';
+
+const PageAdminHome = () => {
 	useQueryClient();
-	const { data: assignements, isSuccess, refetch } = useQuery('getAssignements', getAssignements);
-	const [isOpen, setIsOpen] = useState(false);
+	const { data: assignements, isSuccess } = useQuery('getAssignements', getAssignements);
 	const [activeTab, setActiveTab] = useState('1');
-	const toggle = () => {
-		setIsOpen(((prev) => !prev));
-	};
 	return (
 		<Container className="d-flex flex-column justify-content-start align-items-start">
 			<h3 className="py-4">Application de gestion des Assignments</h3>
-			<div className="mb-4 w-100">
-				<Button onClick={toggle} variant="contained" color="primary">
-					Ajouter devoir
-				</Button>
-				<Collapse className="w-100 mt-3 mb-2" isOpen={isOpen}>
-					<AssignementAdd afterSubmit={refetch} />
-				</Collapse>
-			</div>
 			<div className="w-100">
 				<Nav tabs>
 					<NavItem>
@@ -119,4 +104,4 @@ const PageHome = () => {
 	);
 };
 
-export default PageHome;
+export default PageAdminHome;
