@@ -37,12 +37,12 @@ const PageAssignment = () => {
 		isSuccess,
 		refetch,
 	} = useQuery(['teacherGetOneAssignements', { id }], getOneAssignement, {
-		initialData: { subject: {} },
+		initialData: { subject: {}, rendu: true },
 	});
 	return (
 		<Container className="d-flex flex-column justify-content-start align-items-start">
-			<h3 className="py-4">Note</h3>
-			{isTeacher && !note && (
+			<h3 className="py-4">Assignement app - {nom}</h3>
+			{isSuccess && isTeacher && !rendu && (
 				<div className="mb-4 w-100">
 					<Button onClick={toggle} variant="contained" color="primary">
 						Noter le devoir

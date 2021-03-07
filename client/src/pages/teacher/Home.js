@@ -10,7 +10,7 @@ const PageTeacherHome = () => {
 	const { data: assignments, isSuccess } = useQuery('teacherGetAssignements', getAssignements);
 	return (
 		<Container className="d-flex flex-column justify-content-start align-items-start">
-			<h3 className="py-4">Application de gestion des Assignments</h3>
+			<h3 className="py-4">Assignement app</h3>
 			{isSuccess && assignments && (
 				<AssignmentList assignments={assignments} />
 			)}
