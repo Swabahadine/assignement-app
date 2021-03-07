@@ -1,12 +1,12 @@
 const express = require('express');
 const { validator, wrapAsync: wa } = require('express-server-app');
 const subjectServices = require('../services/Subject');
-const { withAdmin } = require('../session/withRoles');
+const { withAdmin, withAuth } = require('../session/withRoles');
 
 const router = express.Router();
 
 router.get('/',
-	withAdmin,
+	withAuth,
 	wa(async (req, res) => {
 		const assignements = await subjectServices.findAll();
 		res.json(assignements);
