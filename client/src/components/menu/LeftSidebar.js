@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 import { clearAuth } from '../../lib/authentication';
 import { getUser } from '../../lib/localstorage/userStorage';
+import { USER_ROLE } from '../../lib/api/enums';
 
 const LeftSidebar = ({ children, className, ...props }) => {
 	const { username, role } = getUser();
@@ -25,6 +26,11 @@ const LeftSidebar = ({ children, className, ...props }) => {
 				<NavItem className="text-center w-100 py-2">
 					<NavLink className="text-light" to="/home"><span>Assignements</span></NavLink>
 				</NavItem>
+				{role === USER_ROLE.ADMIN && (
+					<NavItem className="text-center w-100 py-2">
+						<NavLink className="text-light" to="/subjects"><span>Subjects</span></NavLink>
+					</NavItem>
+				)}
 				<NavItem className="text-center w-100 py-2">
 					<NavLink className="text-light" onClick={clearAuth} to="/login"><span>Log out</span></NavLink>
 				</NavItem>

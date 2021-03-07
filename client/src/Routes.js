@@ -4,6 +4,7 @@ import {
 	Route,
 	Redirect,
 } from 'react-router-dom';
+import { USER_ROLE } from '../../api/src/lib/enums';
 
 import LeftSidebar from './components/menu/LeftSidebar';
 
@@ -13,6 +14,7 @@ import PrivateRoute from './lib/PrivateRoute';
 import PageHome from './pages/Home';
 import PageLogin from './pages/Login';
 import PageSignUp from './pages/SignUp';
+import PageSubject from './pages/Subject';
 
 const { ADMIN, USER, TEACHER } = USER_ROLE;
 /**
@@ -23,6 +25,11 @@ const menuPages = {
 		roles: [ADMIN, USER, TEACHER],
 		Page: PageHome,
 		path: '/home',
+	},
+	PageSubject: {
+		roles: [ADMIN],
+		Page: PageSubject,
+		path: '/subjects',
 	},
 };
 
